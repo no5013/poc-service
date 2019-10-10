@@ -33,7 +33,7 @@ public class DummyServiceAApplication {
     @GetMapping("/hello/{service}")
     public String helloFromAnotherService(@PathVariable String service){
         return restTemplate.exchange(
-                String.join("","http://",service),
+                String.join("","http://",service,"/hello"),
                 HttpMethod.GET,
                 new HttpEntity<>(new HttpHeaders()),
                 String.class
