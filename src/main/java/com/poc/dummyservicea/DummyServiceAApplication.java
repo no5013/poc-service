@@ -11,8 +11,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @SpringBootApplication
 @RestController
@@ -30,10 +32,70 @@ public class DummyServiceAApplication {
         return "What the f*ck";
     }
 
-    @GetMapping("/hello/{service}")
-    public String helloFromAnotherService(@PathVariable String service){
+    @GetMapping("/hello/1")
+    public String helloFromAnotherService(@RequestParam(required = false, defaultValue = "0") Integer delay){
+        String url = UriComponentsBuilder.fromUriString("http://poc-service-b/hello")
+                .queryParam("delay", delay)
+                .build()
+                .toString();
         return restTemplate.exchange(
-                String.join("","http://",service,"/hello"),
+                url,
+                HttpMethod.GET,
+                new HttpEntity<>(new HttpHeaders()),
+                String.class
+        ).getBody();
+    }
+
+    @GetMapping("/hello/2")
+    public String helloFromAnotherService2(@RequestParam(required = false, defaultValue = "0") Integer delay){
+        String url = UriComponentsBuilder.fromUriString("http://poc-service-b/hello2")
+                .queryParam("delay", delay)
+                .build()
+                .toString();
+        return restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                new HttpEntity<>(new HttpHeaders()),
+                String.class
+        ).getBody();
+    }
+
+    @GetMapping("/hello/3")
+    public String helloFromAnotherService3(@RequestParam(required = false, defaultValue = "0") Integer delay){
+        String url = UriComponentsBuilder.fromUriString("http://poc-service-b/hello3")
+                .queryParam("delay", delay)
+                .build()
+                .toString();
+        return restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                new HttpEntity<>(new HttpHeaders()),
+                String.class
+        ).getBody();
+    }
+
+    @GetMapping("/hello/4")
+    public String helloFromAnotherService4(@RequestParam(required = false, defaultValue = "0") Integer delay){
+        String url = UriComponentsBuilder.fromUriString("http://poc-service-b/hello4")
+                .queryParam("delay", delay)
+                .build()
+                .toString();
+        return restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                new HttpEntity<>(new HttpHeaders()),
+                String.class
+        ).getBody();
+    }
+
+    @GetMapping("/hello/5")
+    public String helloFromAnotherService5(@RequestParam(required = false, defaultValue = "0") Integer delay){
+        String url = UriComponentsBuilder.fromUriString("http://poc-service-b/hello5")
+                .queryParam("delay", delay)
+                .build()
+                .toString();
+        return restTemplate.exchange(
+                url,
                 HttpMethod.GET,
                 new HttpEntity<>(new HttpHeaders()),
                 String.class
