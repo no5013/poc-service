@@ -8,7 +8,7 @@ VOLUME /tmp
 EXPOSE 8080
 
 # Set application's JAR file
-ARG JAR_FILE=target/dummy-service-a-0.0.1-SNAPSHOT.jar
+ARG JAR_FILE=target/dummy-service-0.0.1-SNAPSHOT.jar
 
 # Add the application's JAR file to the container
 ADD ${JAR_FILE} app.jar
