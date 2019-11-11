@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.poc</groupId>
-    <artifactId>dummy-service-a</artifactId>
+    <artifactId>dummy-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>dummy-service-a</name>
+    <name>dummy-service</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
