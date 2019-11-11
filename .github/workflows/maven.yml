@@ -19,5 +19,8 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag docker.pkg.github.com/no5013/poc-service/my-image-name:1.0.0
 
+
     - name: Push to Registry
-      run: docker push docker.pkg.github.com/no5013/poc-service/my-image-name:1.0.0
+      run: |
+        docker login docker.pkg.github.com -u no5013
+        docker push docker.pkg.github.com/no5013/poc-service/my-image-name:1.0.0
