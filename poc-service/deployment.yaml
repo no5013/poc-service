@@ -39,3 +39,10 @@ spec:
           name: poc-service
           ports:
             - containerPort: 8080
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            valueFrom:
+              configMapKeyRef:
+                name: env-config
+                key: spring.profile
+
