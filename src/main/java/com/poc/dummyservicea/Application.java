@@ -2,6 +2,7 @@ package com.poc.dummyservicea;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -52,7 +53,7 @@ public class Application {
         return ResponseEntity.ok("PATCH OK");
     }
 
-    @PostMapping("/test-call")
+    @PostMapping("/restapi")
     public ResponseEntity<?> testCall(@RequestBody Map<String, Object> requestBody){
         log.info("BODY: {}", requestBody);
         String url = (String) requestBody.get("path");
@@ -65,7 +66,6 @@ public class Application {
                 String.class
         );
     }
-
 
     @Bean
     public RestTemplate restTemplate(){
