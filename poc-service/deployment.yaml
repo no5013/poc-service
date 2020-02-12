@@ -39,10 +39,17 @@ spec:
           name: poc-service
           ports:
             - containerPort: 8080
-          env:
-          - name: SPRING_PROFILES_ACTIVE
-            valueFrom:
-              configMapKeyRef:
-                name: env-config
-                key: spring.profile
+          volumeMounts:
+            - name: application-config
+              mountPath: "/deployments/config"
+              readOnly: true
+      volumes:
+        - name: application-config
+          configMap:
+            name: game-config
+            items:
+              - key: game.properties
+                path: game.properties
+              - key: ui.properties
+                path: ui.properties
 
