@@ -34,7 +34,7 @@ spec:
       imagePullSecrets:
         - name: regcred
       containers:
-        - image: docker.pkg.github.com/no5013/poc-service/poc-service:1.0.0
+        - image: docker.io/no5013/poc-service:1.0.0
           imagePullPolicy: Always
           name: poc-service
           ports:
@@ -43,6 +43,17 @@ spec:
             - name: application-config
               mountPath: "/deployments/config"
               readOnly: true
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: spring.profile
+            - name: SECRET_CODE_LIVES
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: secret.code.lives
       volumes:
         - name: application-config
           configMap:
