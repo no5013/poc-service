@@ -23,4 +23,4 @@ jobs:
     - name: Push to Registry
       run: |
         docker login -u no5013 -p ${{ secrets.DOCKER_PASSWORD }}
-        docker push docker.pkg.github.com/no5013/poc-service/poc-service:1.0.0
+        docker push no5013/poc-service/poc-service:1.0.0
