@@ -1,26 +1,27 @@
 package com.poc.dummyservicea;
 
+import com.poc.dummyservicea.model.AppSource;
+import com.poc.dummyservicea.service.KeycloakService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
+import th.co.scb.accesshelper.annotation.RequireLogin;
 
 import java.util.Map;
 
 @Slf4j
 @SpringBootApplication
 @RestController
+@ComponentScan(basePackages = {"th.co.scb", "com.poc"})
 public class Application {
 
     @Autowired
@@ -28,6 +29,9 @@ public class Application {
 
     @Autowired
     private LiveService liveService;
+
+    @Autowired
+    private KeycloakService keycloakService;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -58,6 +62,12 @@ public class Application {
         return ResponseEntity.ok("PATCH OK");
     }
 
+    @RequireLogin
+    @GetMapping(value = "/headers", produces = "application/json")
+    public ResponseEntity getHeaders(@RequestHeader HttpHeaders httpHeaders){
+        return ResponseEntity.ok(httpHeaders);
+    }
+
     @PostMapping("/restapi")
     public ResponseEntity<?> testCall(@RequestBody Map<String, Object> requestBody){
         log.info("BODY: {}", requestBody);
@@ -75,6 +85,14 @@ public class Application {
     @GetMapping("/live")
     public ResponseEntity<?> curLive(){
         return ResponseEntity.ok("CURRENT LIVE: " + liveService.getCurrentLive());
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestHeader String source, @RequestBody Map<String, Object> requestBody){
+        String username = (String) requestBody.get("username");
+        String password = (String) requestBody.get("password");
+        AppSource appSource = AppSource.valueOf(source.toUpperCase());
+        return ResponseEntity.ok(keycloakService.login(username, password, appSource));
     }
 
     @Bean

@@ -44,11 +44,11 @@ spec:
               mountPath: "/deployments/config"
               readOnly: true
           env:
-            - name: SPRING_PROFILES_ACTIVE
-              valueFrom:
-                configMapKeyRef:
-                  name: env-config
-                  key: spring.profile
+#            - name: spring.profiles.active
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: env-config
+#                  key: spring.profile
             - name: SECRET_CODE_LIVES
               valueFrom:
                 configMapKeyRef:
