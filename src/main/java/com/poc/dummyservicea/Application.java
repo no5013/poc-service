@@ -15,15 +15,13 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import th.co.scb.accesshelper.annotation.RequireLogin;
+//import th.co.scb.accesshelper.annotation.RequireLogin;
 
 import java.util.Map;
 
 @Slf4j
 @SpringBootApplication
 @RestController
-@ComponentScan(basePackages = {"th.co.scb", "com.poc"})
-@EnableAspectJAutoProxy
 public class Application {
 
     @Autowired
@@ -64,7 +62,7 @@ public class Application {
         return ResponseEntity.ok("PATCH OK");
     }
 
-    @RequireLogin
+//    @RequireLogin
     @GetMapping(value = "/headers", produces = "application/json")
     public ResponseEntity getHeaders(@RequestHeader HttpHeaders httpHeaders){
         return ResponseEntity.ok(httpHeaders);
