@@ -14,7 +14,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package -DskipTests --file pom.xml
 
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag docker.io/no5013/poc-service:1.0.0
