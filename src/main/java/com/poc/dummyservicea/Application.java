@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,6 +23,7 @@ import java.util.Map;
 @SpringBootApplication
 @RestController
 @ComponentScan(basePackages = {"th.co.scb", "com.poc"})
+@EnableAspectJAutoProxy
 public class Application {
 
     @Autowired
