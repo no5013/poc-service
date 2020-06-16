@@ -26,9 +26,6 @@ public class Application {
     @Autowired
     private RestTemplate restTemplate;
 
-    @Autowired
-    private LiveService liveService;
-
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
@@ -70,11 +67,6 @@ public class Application {
                 new HttpEntity<>(body, new HttpHeaders()),
                 String.class
         );
-    }
-
-    @GetMapping("/live")
-    public ResponseEntity<?> curLive(){
-        return ResponseEntity.ok("CURRENT LIVE: " + liveService.getCurrentLive());
     }
 
     @Bean
