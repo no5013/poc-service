@@ -105,6 +105,24 @@ public class Application {
         return ResponseEntity.ok().headers(response.getHeaders()).body(null);
     }
 
+    @PostMapping("/restapi4")
+    public ResponseEntity<?> testCall4(@RequestHeader HttpHeaders httpHeaders, @RequestBody Map<String, Object> requestBody){
+        log.info("BODY: {}", requestBody);
+        String url = (String) requestBody.get("path");
+        String method = (String) requestBody.get("method");
+        Object body = requestBody.get("body");
+        ResponseEntity<String> response = restTemplate.exchange(
+                url,
+                HttpMethod.valueOf(method),
+                new HttpEntity<>(body, httpHeaders),
+                String.class
+        );
+        response.getHeaders().remove("Transfer-Encoding");
+        log.info("RESPONSE: {}", response);
+
+        return ResponseEntity.ok().headers(httpHeaders).body(response.getBody());
+    }
+
     @Bean
     public RestTemplate restTemplate(){
         return new RestTemplate();
