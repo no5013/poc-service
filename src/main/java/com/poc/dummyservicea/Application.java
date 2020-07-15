@@ -56,17 +56,53 @@ public class Application {
     }
 
     @PostMapping("/restapi")
-    public ResponseEntity<?> testCall(@RequestBody Map<String, Object> requestBody){
+    public ResponseEntity<?> testCall(@RequestHeader HttpHeaders httpHeaders, @RequestBody Map<String, Object> requestBody){
         log.info("BODY: {}", requestBody);
         String url = (String) requestBody.get("path");
         String method = (String) requestBody.get("method");
         Object body = requestBody.get("body");
-        return restTemplate.exchange(
+        ResponseEntity<String> response = restTemplate.exchange(
                 url,
                 HttpMethod.valueOf(method),
-                new HttpEntity<>(body, new HttpHeaders()),
+                new HttpEntity<>(body, httpHeaders),
                 String.class
         );
+        log.info("RESPONSE: {}", response);
+        return response;
+    }
+
+    @PostMapping("/restapi2")
+    public ResponseEntity<?> testCall2(@RequestHeader HttpHeaders httpHeaders, @RequestBody Map<String, Object> requestBody){
+        log.info("BODY: {}", requestBody);
+        String url = (String) requestBody.get("path");
+        String method = (String) requestBody.get("method");
+        Object body = requestBody.get("body");
+        ResponseEntity<String> response = restTemplate.exchange(
+                url,
+                HttpMethod.valueOf(method),
+                new HttpEntity<>(body, httpHeaders),
+                String.class
+        );
+        log.info("RESPONSE: {}", response);
+
+        return ResponseEntity.ok().headers(httpHeaders).body(response.getBody());
+    }
+
+    @PostMapping("/restapi3")
+    public ResponseEntity<?> testCall3(@RequestHeader HttpHeaders httpHeaders, @RequestBody Map<String, Object> requestBody){
+        log.info("BODY: {}", requestBody);
+        String url = (String) requestBody.get("path");
+        String method = (String) requestBody.get("method");
+        Object body = requestBody.get("body");
+        ResponseEntity<String> response = restTemplate.exchange(
+                url,
+                HttpMethod.valueOf(method),
+                new HttpEntity<>(body, httpHeaders),
+                String.class
+        );
+        log.info("RESPONSE: {}", response);
+
+        return ResponseEntity.ok().headers(response.getHeaders()).body(null);
     }
 
     @Bean
